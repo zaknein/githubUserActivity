@@ -1,9 +1,9 @@
+package com.zaknein.githubUserActivity;
+
 import java.net.URI;
-import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -15,17 +15,18 @@ public class App{
 
         System.out.println("testing send GET");
         try {
-            obj.sendGet();
+            obj.sendGet("zaknein");
         } catch (Exception e) {
             System.out.println("Error during GET request: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-    private void sendGet() throws Exception{
+    private void sendGet(String username) throws Exception{
+        
         HttpRequest request = HttpRequest.newBuilder()
             .GET()
-            .uri(URI.create("https://api.github.com"))
+            .uri(URI.create("https://api.github.com/users/zaknein/events"))
             .setHeader("User-Agent", "App")
             .build();
 
@@ -35,9 +36,9 @@ public class App{
         System.out.println(response.statusCode());
 
         if(response.statusCode() == 200){
-            String responseBody = response.body();
+            String responsebody = response.body();
 
-            JSONArray event = new JSONArray(responsebody);
+            JSONArray events = new JSONArray(responsebody);
 
              // Verificar si hay eventos
             if (events.length() == 0) {
