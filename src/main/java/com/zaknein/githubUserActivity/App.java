@@ -14,8 +14,9 @@ public class App{
         App obj = new App();
 
         System.out.println("testing send GET");
+        String username = args[0];
         try {
-            obj.sendGet("zaknein");
+            obj.sendGet(username);
         } catch (Exception e) {
             System.out.println("Error during GET request: " + e.getMessage());
             e.printStackTrace();
@@ -26,7 +27,7 @@ public class App{
         
         HttpRequest request = HttpRequest.newBuilder()
             .GET()
-            .uri(URI.create("https://api.github.com/users/zaknein/events"))
+            .uri(URI.create("https://api.github.com/users/" + username + "/events"))
             .setHeader("User-Agent", "App")
             .build();
 
