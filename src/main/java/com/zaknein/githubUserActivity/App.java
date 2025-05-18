@@ -33,7 +33,6 @@ public class App{
 
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-        // print status code
         System.out.println(response.statusCode());
 
         if(response.statusCode() == 200){
@@ -41,32 +40,27 @@ public class App{
 
             JSONArray events = new JSONArray(responsebody);
 
-             // Verificar si hay eventos
             if (events.length() == 0) {
                 System.out.println("No events found for user " + username);
             } else {
                 System.out.println("Events found for user " + username + ":");
                 
-                // Iterar sobre cada evento
                 for (int i = 0; i < events.length(); i++) {
                     JSONObject event = events.getJSONObject(i);
                     
-                    // Mostrar detalles básicos del evento
-                    String eventType = event.getString("type"); // Tipo de evento (push, create, etc.)
-                    String repoName = event.getJSONObject("repo").getString("name"); // Nombre del repositorio
-                    String createdAt = event.getString("created_at"); // Fecha del evento
+                    String eventType = event.getString("type"); 
+                    String repoName = event.getJSONObject("repo").getString("name"); 
+                    String createdAt = event.getString("created_at"); 
                     
                     System.out.println("Event Type: " + eventType);
                     System.out.println("Repository: " + repoName);
                     System.out.println("Created At: " + createdAt);
-                    System.out.println("--------------------------------------");
                 }
             }
         } else {
             System.out.println("Request failed. Status Code: " + response.statusCode());
         
         } 
-        // print response body
         System.out.println(response.body());
     }
 }
